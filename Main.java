@@ -15,7 +15,7 @@ public class Main {
     // function to connect to cred database created in postgresSQL
     public Connection connect() throws SQLException {
         return DriverManager.getConnection("jdbc:postgresql://localhost:5432/CRED_DB",
-                "postgres", "Gorsad123!");
+                "postgres", "123456");
     }
 
     // Insert ContactInfo into contactinfo table in database
@@ -123,7 +123,9 @@ public class Main {
 
         Main main = new Main();
 
-        main.deleteCustomer(1);
+        Customer customer = new Customer();
+
+        main.insertCustomer(customer);
 
     }
 }
