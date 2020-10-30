@@ -1,4 +1,4 @@
-package com.company;
+package com.io.cred;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.*;
+
 
 /*
  Customer class
@@ -14,52 +16,46 @@ import java.io.IOException;
 
 public class Customer {
 
-    // customer information
-    private int CustomerID;
-    private String FirstName;
-    private String LastName;
-    private String DOB;
-    private String Email;
-    private int PhoneNumber;
-    private boolean Active;
+    private ContactInfo contactInfo;
+    private boolean active;
+    private Address address;
 
-    // customer contact details
-    private String AddressLine1;
-    private String AddressLine2;
-    private String City;
-    private String State;
-    private int ZipCode;
-
-    //constructors, one default, and one for all info
-    public Customer() {
-        this.CustomerID = 0;
-        this.FirstName = "John";
-        this.LastName = "Doe";
-        this.DOB = "00/00/0000";
-        this.Email = "JohnDoe@gmail.com";
-        this.PhoneNumber = 0;
-        this.Active = true;
-
-        this.AddressLine1 = "Pune";
-        this.AddressLine2 = "Yup, definitely Pune";
-        this.City = "Pune";
-        this.State = "Maharashtra";
-        this.ZipCode = 0;
+    public ContactInfo getContactInfo() {
+        return contactInfo;
     }
 
-    public Customer(int customerID, String firstName, String lastName, String DOB, String email, int phoneNumber, boolean active, String addressLine1, String addressLine2, String city, String state, int zipCode) {
-        CustomerID = customerID;
-        FirstName = firstName;
-        LastName = lastName;
-        this.DOB = DOB;
-        Email = email;
-        PhoneNumber = phoneNumber;
-        Active = active;
-        AddressLine1 = addressLine1;
-        AddressLine2 = addressLine2;
-        City = city;
-        State = state;
-        ZipCode = zipCode;
+    public void setContactInfo(ContactInfo contactInfo) {
+        this.contactInfo = contactInfo;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    //constructors, one default, and one for all variables
+
+    public Customer() {
+        this.contactInfo = new ContactInfo();
+        this.active = true;
+        this.address = new Address();
+    }
+
+    public Customer(ContactInfo contactInfo, boolean active, Address address) {
+        this.contactInfo = contactInfo;
+        this.active = active;
+        this.address = address;
     }
 
     /*
@@ -75,6 +71,14 @@ public class Customer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /*
+    Insert into CustomerInfo table function
+    Takes Customer Object and inserts the ContactInfo object information into relavant table in PostgreSQL Database
+     */
+    public void insertIntoDB(){
+
     }
 
 }
