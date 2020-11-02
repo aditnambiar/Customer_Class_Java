@@ -100,7 +100,7 @@ public class Main {
         this.insertAddress(customer);
     }
 
-    // delete information in databse (both in contactinfo and addressinfo tables) through Customer ID
+    // delete information in database (both in contactinfo and addressinfo tables) through Customer ID
     public void deleteCustomer(int id) {
         String SQL = "DELETE FROM contactinfo WHERE id = ?";
 
@@ -119,6 +119,66 @@ public class Main {
 
     }
 
+    // update contact info using id
+    public void updateContact(int id, String firstName, String lastName, String dateOfBirth, String email, int phoneNumber) {
+        String SQL = "UPDATE contactinfo "
+                + "SET firstname = ?, "
+                + "lastname = ?, "
+                + "dateofbirth = ?, "
+                + "email = ?, "
+                + "phonenumber = ? "
+                + "WHERE id = ?";
+
+        int affectedrows = 0;
+
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+
+            pstmt.setString(1, firstName);
+            pstmt.setString(2, lastName);
+            pstmt.setString(3, dateOfBirth);
+            pstmt.setString(4, email);
+            pstmt.setInt(5, phoneNumber);
+            pstmt.setInt(6, id);
+
+            affectedrows = pstmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
+    // update address info using id
+    public void updateAddress(int id, String addressline1, String addressline2, String city, String state, int zipcode) {
+        String SQL = "UPDATE addressinfo "
+                + "SET addressline1 = ?, "
+                + "addressline2 = ?, "
+                + "city = ?, "
+                + "state = ?, "
+                + "zipcode = ? "
+                + "WHERE id = ?";
+
+        int affectedrows = 0;
+
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+
+            pstmt.setString(1, addressline1);
+            pstmt.setString(2, addressline2);
+            pstmt.setString(3, city);
+            pstmt.setString(4, state);
+            pstmt.setInt(5, zipcode);
+            pstmt.setInt(6, id);
+
+            affectedrows = pstmt.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
     public static void main(String[] args) throws SQLException {
 
         Main main = new Main();
@@ -126,6 +186,8 @@ public class Main {
         Customer customer = new Customer();
 
         main.insertCustomer(customer);
+
+        main.updateContact(1, "Shreeraj", "Pathare", "06/07/1996", "ashddvhjkfjhvdf", 28384);
 
     }
 }
